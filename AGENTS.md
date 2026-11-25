@@ -32,7 +32,7 @@ use the editor.
 ## Exhibition architecture
 - Keep the exhibition as one scrolling index route because the brief explicitly requests section-based navigation and continuous storytelling.
 - Isolate R3F imports in lazy-loaded scene modules behind ClientOnly so text remains server-rendered and WebGL failures retain a static fallback.
-- Use one shared fixed 3D stage and section-derived scene progress for continuous transitions without remounting canvases.
+- Use one shared fixed 3D stage; on mobile align its rectangle to visible section media slots so scenes travel with content without spacer screens or extra canvases.
 - Keep external project destinations in the central project configuration and show a truthful pending state for absent URLs, never a fabricated destination.
 - Use GSAP for interface choreography, native scrolling for navigation, and refs for frame animation to avoid conflicting motion systems and per-frame React renders.
-- Keep the optical coating in its own shader material and batch repeated disc markings into merged geometry for a distinctive surface without excessive draw calls.
+- Use the intertwined connection sculpture, with frame-delta animation and explicit mouse/touch camera inputs; expose dev-only canvas motion attributes for verification.

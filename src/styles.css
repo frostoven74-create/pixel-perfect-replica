@@ -64,7 +64,6 @@
   --glass-hover: oklch(0.96 0.01 250 / 0.07);
   --nav-glass: oklch(0.115 0.006 260 / 0.82);
   --shadow-nav: 0 10px 35px oklch(0 0 0 / 0.2);
-  --disc-metal: conic-gradient(from 135deg, var(--graphite), var(--silver) 6%, var(--graphite) 18%, var(--champagne) 25%, var(--graphite) 35%, var(--primary) 49%, var(--graphite) 65%, var(--silver) 75%, var(--graphite) 94%);
   --sdg-spectrum: linear-gradient(to right, oklch(0.6 0.2 25) 0% 6%, oklch(0.75 0.13 80) 6% 12%, oklch(0.55 0.15 143) 12% 18%, oklch(0.53 0.2 20) 18% 24%, oklch(0.65 0.22 28) 24% 30%, oklch(0.76 0.11 215) 30% 36%, oklch(0.84 0.14 90) 36% 42%, oklch(0.47 0.12 10) 42% 48%, oklch(0.65 0.21 35) 48% 54%, oklch(0.57 0.2 350) 54% 60%, oklch(0.76 0.17 65) 60% 66%, oklch(0.65 0.09 85) 66% 72%, oklch(0.46 0.07 145) 72% 78%, oklch(0.64 0.14 240) 78% 84%, oklch(0.64 0.16 142) 84% 90%, oklch(0.46 0.1 245) 90% 96%, oklch(0.36 0.07 250) 96%);
 }
 
@@ -204,10 +203,11 @@
 .tv-footer-nav { display: flex; align-items: start; gap: 12px; }
 .tv-footer-nav .tv-nav-link { padding: 0 8px; font-size: 9px; }
 .tv-footer-meta { display: flex; justify-content: space-between; grid-column: 1 / -1; font-size: 7px; color: var(--muted-foreground); padding-top: 28px; border-top: 1px solid var(--border-subtle); }
-.tv-static-disc { position: absolute; left: 50%; top: 50%; width: 340px; height: 340px; transform: translate(-50%, -50%) rotate(-18deg) rotateX(30deg); border-radius: 50%; border: 1px solid var(--silver); background: var(--disc-metal); box-shadow: inset 0 0 0 12px var(--graphite), inset 0 0 0 13px var(--silver), inset 0 0 0 19px var(--graphite); mask-image: radial-gradient(circle, transparent 0% 11%, var(--foreground) 12%); }
-.tv-static-ring { position: absolute; inset: -20px; border-radius: 50%; border: 1px solid var(--primary); }
-.tv-static-ring-2 { inset: 50px; border-color: var(--champagne); }
-.tv-static-core { position: absolute; inset: 39%; border-radius: 50%; background: var(--primary); box-shadow: 0 0 40px var(--primary); }
+.tv-scene-slot { display: none; }
+.tv-static-connection { position: absolute; top: 50%; left: 50%; width: 190px; height: 190px; transform: translate(-50%,-50%); }
+.tv-static-connection span { position: absolute; inset: 12px; border: 14px solid var(--silver); border-radius: 45%; transform: rotate(30deg) skewY(-20deg); box-shadow: inset 3px 3px 8px var(--graphite); }
+.tv-static-connection span:nth-child(2) { border-color: var(--earth); transform: rotate(110deg) skewY(-20deg); }
+.tv-static-connection span:nth-child(3) { border-width: 3px; border-color: var(--imagined); transform: rotate(190deg) skewY(-20deg); }
 @keyframes tv-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
 @media (min-width: 1600px) {
@@ -221,19 +221,20 @@
   .tv-story-copy .tv-story-title { font-size: 54px; }
 }
 @media (max-width: 768px) {
-  html { scroll-padding-top: 20px; }
+  html { scroll-padding-top: 88px; }
   .tv-nav-wrap { top: max(16px, env(safe-area-inset-top)); left: 20px; right: 20px; }
   .tv-nav { min-height: 53px; padding: 3px 4px 3px 15px; }
   .tv-wordmark { font-size: 11px; }
-  .tv-scene-stage { height: 600px; top: 35px; }
-  .tv-hero { min-height: 790px; height: 790px; max-height: none; padding: 103px 24px 25px; }
+  .tv-scene-stage { height: 240px; top: 200px; }
+  .tv-scene-slot { display: block; height: 240px; width: 100%; position: relative; }
+  .tv-hero { min-height: 0; height: auto; max-height: none; padding: 100px 24px 18px; }
   .tv-eyebrow { font-size: 7px; gap: 7px; }
   .tv-hero h1 { font-size: 36px; margin-top: 19px; font-weight: 500; }
   .tv-hero h1 span { font-size: 51px; margin-left: 3px; }
   .tv-hero h1 sup { font-size: 8px; top: 14px; margin-left: 4px; }
   .tv-hero-subtitle { font-size: 12px; margin-top: 6px; }
   .tv-hero-subtitle em { font-size: 18px; }
-  .tv-hero-projects { top: 454px; left: 24px; right: 24px; grid-template-columns: 1fr; gap: 20px; }
+  .tv-hero-projects { position: relative; top: auto; left: auto; right: auto; grid-template-columns: 1fr; gap: 18px; }
   .tv-project-panel { max-width: none; width: 100%; display: grid; grid-template-columns: 1fr auto; column-gap: 12px; border-top: 1px solid var(--border); padding-top: 16px; }
   .tv-project-overline { font-size: 7px; grid-column: 1; gap: 5px; }
   .tv-project-panel h2 { font-size: 24px; margin: 8px 0 5px; grid-column: 1; }
@@ -241,21 +242,21 @@
   .tv-project-summary { display: none; }
   .tv-project-panel .tv-cta { grid-column: 2; grid-row: 2 / 4; align-self: center; padding: 0 10px; min-height: 43px; gap: 9px; font-size: 9px; flex-direction: row; justify-content: center; }
   .tv-cta-note { font-size: 6px; }
-  .tv-core-label { position: absolute; top: -46px; left: 0; right: 0; font-size: 7px; }
+  .tv-core-label { display: none; }
   .tv-core-status { display: none; }
-  .tv-hero-footer { left: 24px; right: 24px; bottom: 24px; justify-content: center; }
+  .tv-hero-footer { position: relative; left: auto; right: auto; bottom: auto; justify-content: center; margin-top: 16px; }
   .tv-coordinate, .tv-edition { display: none; }
   .tv-scroll-button { font-size: 8px; }
   .tv-hero-edge { left: 24px; right: 24px; }
-  .tv-section { padding: 70px 24px; }
+  .tv-section { padding: 48px 24px; }
   .tv-section-label { font-size: 7px; margin-bottom: 34px; }
-  .tv-connection-intro { min-height: 570px; }
+  .tv-connection-intro { min-height: 0; }
   .tv-story-title { font-size: 38px; }
-  .tv-direction-rail { margin-top: 80px; font-size: 7px; gap: 13px; }
+  .tv-direction-rail { margin-top: 30px; font-size: 7px; gap: 13px; }
   .tv-direction-rail svg { width: 19px; height: 19px; }
   .tv-intro-copy { font-size: 11px; margin-top: 25px; }
-  .tv-story { min-height: 1100px; padding: 0 24px; }
-  .tv-story-inner { display: flex; flex-direction: column; align-items: stretch; gap: 0; min-height: 1020px; padding: 420px 0 80px; position: relative; }
+  .tv-story { min-height: 0; padding: 20px 24px 24px; }
+  .tv-story-inner { display: flex; flex-direction: column; align-items: stretch; gap: 0; min-height: 0; padding: 14px 0 24px; position: relative; }
   .tv-story-copy { max-width: 100%; }
   .tv-story-copy .tv-section-label { margin-bottom: 28px; }
   .tv-story-copy .tv-story-title { font-size: 41px; }
@@ -264,28 +265,28 @@
   .tv-story-kicker { font-size: 7px; margin-top: 24px; }
   .tv-feature-list { font-size: 8px; gap: 9px; }
   .tv-feature-list span:not(:last-child)::after { margin-left: 9px; }
-  .tv-scene-caption { position: absolute; top: 355px; left: 0; right: 0; padding: 0; font-size: 6px; }
-  .tv-story-bottom { left: 24px; right: 24px; font-size: 6px; }
-  .tv-purpose { min-height: 760px; }
+  .tv-scene-caption { display: none; }
+  .tv-story-bottom { position: relative; left: auto; right: auto; font-size: 7px; padding: 16px 0 0; }
+  .tv-purpose { min-height: 0; }
   .tv-purpose .tv-story-title { font-size: 36px; }
   .tv-purpose-pair { gap: 16px; font-size: 8px; margin-top: 36px; }
   .tv-purpose-bridge { min-width: 35px; }
-  .tv-vision { min-height: 740px; }
+  .tv-vision { min-height: 0; }
   .tv-vision .tv-story-title { font-size: 40px; }
   .tv-concept-label { font-size: 7px; }
   .tv-vision-statement { font-size: 17px; }
   .tv-vision-note { font-size: 10px; }
-  .tv-final { min-height: 740px; }
+  .tv-final { min-height: 0; }
   .tv-final .tv-story-title { font-size: 47px; }
-  .tv-final-actions { margin-top: 330px; flex-wrap: wrap; gap: 10px; }
+  .tv-final-actions { margin-top: 16px; flex-wrap: wrap; gap: 10px; }
   .tv-final-actions .tv-cta { font-size: 9px; padding: 0 12px; gap: 12px; }
   .tv-footer { padding: 35px 24px 20px; grid-template-columns: 1fr; gap: 20px; }
   .tv-footer-brand { font-size: 15px; }
   .tv-footer-nav { gap: 18px; }
   .tv-footer-nav .tv-nav-link { padding-left: 0; }
   .tv-footer-meta { flex-direction: column; gap: 12px; font-size: 6px; padding-top: 20px; }
-  .tv-static-disc { width: 260px; height: 260px; }
-  .tv-world-word { font-size: 60px; bottom: 60px; }
+
+  .tv-world-word { display: none; }
 }
 @media (max-width: 359px) {
   .tv-hero h1 { font-size: 30px; }
@@ -306,8 +307,5 @@
 @media (max-height: 500px) and (max-width: 768px) {
   .tv-nav-wrap { position: absolute; top: 10px; left: 16px; right: 16px; }
   .tv-nav { min-height: 44px; }
-  .tv-hero { height: 665px; min-height: 665px; padding-top: 80px; }
-  .tv-scene-stage { top: 105px; height: 350px; }
-  .tv-hero-projects { top: 390px; }
-  .tv-core-label { top: -32px; }
+  .tv-hero { padding-top: 80px; }
 }

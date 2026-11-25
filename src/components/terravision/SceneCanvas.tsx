@@ -3,26 +3,27 @@ import { Environment, Lightformer } from "@react-three/drei";
 import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { sceneState } from "@/lib/scene-state";
-import { CentralDisc } from "./CentralDisc";
+import { ConnectionSculpture } from "./ConnectionSculpture";
+import { cameraTarget, sectionProgress } from "@/lib/scene-motion";
 import { IdeaStructure } from "./IdeaStructure";
 import { Planet } from "./Planet";
 
-const smooth = (a: number, b: number, x: number) => {
-  const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-  return t * t * (3 - 2 * t);
-};
-
 function CameraRig() {
-  const { camera } = useThree();
+  const { camera, scene, gl } = useThree();
   useFrame((_, delta) => {
     const p = sceneState.scroll;
-    const close = smooth(0.02, 0.16, p) * (1 - smooth(0.18, 0.26, p));
-    const z = 8.4 - close * 2.6;
-    const k = 1 - Math.exp(-3 * Math.min(delta, 0.05));
-    camera.position.x += (sceneState.pointerX * 0.35 - camera.position.x) * k;
-    camera.position.y += (sceneState.pointerY * 0.2 - camera.position.y) * k;
-    camera.position.z += (z - camera.position.z) * k;
+    const target = cameraTarget(sceneState.pointerX, sceneState.pointerY, p, sceneState.reducedMotion);
+    const k = 1 - Math.exp(-6 * Math.min(delta, 0.15));
+    camera.position.x += (target.x - camera.position.x) * k;
+    camera.position.y += (target.y - camera.position.y) * k;
+    camera.position.z += (target.z - camera.position.z) * k;
     camera.lookAt(0, 0, 0);
+    if (import.meta.env.DEV) {
+      gl.domElement.dataset['cameraX'] = camera.position.x.toFixed(3);
+      gl.domElement.dataset['cameraZ'] = camera.position.z.toFixed(3);
+      gl.domElement.dataset['sculptureAngle'] = String(scene.getObjectByName('connection-sculpture')?.userData['angle'] ?? 0);
+      gl.domElement.dataset['activeSection'] = sceneState.activeSection;
+    }
   });
   return null;
 }
@@ -51,30 +52,57 @@ export default function SceneCanvas({ lite }: { lite: boolean }) {
   const wrap = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => {
+    let frame = 0;
+    const update = () => {
       const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-scene-range]"));
-      const y = window.scrollY + window.innerHeight * 0.35;
+      const y = window.innerHeight * 0.35;
       let next = 0;
       for (const node of nodes) {
-        const top = node.getBoundingClientRect().top + window.scrollY;
+        const top = node.getBoundingClientRect().top;
         if (y < top) continue;
         const range = node.dataset["sceneRange"]?.split(",").map(Number);
         const from = range?.[0] ?? 0, to = range?.[1] ?? from;
-        const t = Math.min(1, Math.max(0, (y - top) / node.offsetHeight));
-        next = from + (to - from) * t;
+        next = sectionProgress(top,node.offsetHeight,window.innerHeight,from,to);
+        sceneState.activeSection = node.id;
       }
       sceneState.scroll = next;
+      const stage = wrap.current?.parentElement;
+      if (stage && window.innerWidth <= 768) {
+        const slots = Array.from(document.querySelectorAll<HTMLElement>('[data-visual]'));
+        const slot = slots.find(el => { const r=el.getBoundingClientRect(); return r.bottom>70 && r.top<window.innerHeight; });
+        if (slot) {
+          const r = slot.getBoundingClientRect();
+          sceneState.activeSection = slot.dataset['visual'] ?? 'top';
+          stage.style.top = `${r.top}px`;
+          stage.style.height = `${r.height}px`;
+          stage.style.opacity = '1';
+        } else stage.style.opacity = '0';
+      } else if (stage) {
+        stage.style.removeProperty('top'); stage.style.removeProperty('height'); stage.style.opacity = '1';
+      }
     };
+    const onScroll = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(update); };
     const onMove = (e: PointerEvent) => {
       sceneState.pointerX = (e.clientX / window.innerWidth) * 2 - 1;
       sceneState.pointerY = -((e.clientY / window.innerHeight) * 2 - 1);
     };
-    onScroll();
+    const onTouch = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+      sceneState.pointerX = touch.clientX / window.innerWidth * 2 - 1;
+      sceneState.pointerY = 1 - touch.clientY / window.innerHeight * 2;
+    };
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
     window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("touchmove", onTouch, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("touchmove", onTouch);
+      cancelAnimationFrame(frame);
     };
   }, []);
 
@@ -98,7 +126,7 @@ export default function SceneCanvas({ lite }: { lite: boolean }) {
           <Lightformer form="ring" intensity={1.5} position={[0, 0, 6]} scale={3} color="#ffffff" />
         </Environment>
         <CameraRig />
-        <CentralDisc lite={lite} />
+        <ConnectionSculpture lite={lite} />
         <IdeaStructure />
         <Planet lite={lite} />
       </Canvas>

@@ -84,18 +84,19 @@ export function Planet({ lite }: { lite: boolean }) {
   }, []);
 
   useFrame((_, rawDelta) => {
-    const delta = Math.min(rawDelta, 0.05);
+    const delta = rawDelta;
     const p = sceneState.scroll;
-    const vis = ease((p - 0.4) / 0.08) * (1 - ease((p - 0.64) / 0.08));
+    const mobile = window.innerWidth <= 768;
+    const vis = mobile ? (sceneState.activeSection === 'earth' ? 1 : 0) : ease((p - 0.4) / 0.08) * (1 - ease((p - 0.64) / 0.08));
     const connect = 0.45 + ease((p - 0.5) / 0.09)*0.55;
     if (!root.current) return;
     root.current.visible = vis > 0.01;
-    root.current.scale.setScalar(Math.max(0.001, (0.75 + vis * 0.25) * (lite ? 0.55 : 0.85)));
-    root.current.position.y = (1 - vis) * -3 + (window.innerWidth > 768 ? 0 : 1.15);
+    root.current.scale.setScalar(Math.max(0.001, (0.75 + vis * 0.25) * (mobile ? 1.05 : 0.85)));
+    root.current.position.y = mobile ? 0 : (1 - vis) * -3;
     root.current.position.x = window.innerWidth > 768 ? -1.75 : 0;
     const m = sceneState.reducedMotion ? 0 : 1;
-    if (globe.current) globe.current.rotation.y += delta * 0.045 * m;
-    if (clouds.current) clouds.current.rotation.y += delta * 0.065 * m;
+    if (globe.current) globe.current.rotation.y += delta * 0.12 * m;
+    if (clouds.current) clouds.current.rotation.y += delta * 0.16 * m;
     if (network.current) {
       network.current.rotation.y = globe.current?.rotation.y ?? 0;
       network.current.scale.setScalar(Math.max(0.001, connect));

@@ -1,5 +1,9 @@
 # TERRAVISION-OS
 
+- [x] Replace the disc and verify visible camera/pointer animation.
+- [x] Remove mobile spacer heights and anchor 3D visuals to their sections.
+- [x] Verify motion, scrolling, project links and fallback.
+
 - [x] Re-art-direct the exhibition with a dimensional iridescent sculpture, expressive typography and richer project worlds.
 - [x] Verify the redesigned experience at phone, compact preview, tablet and desktop sizes.
 

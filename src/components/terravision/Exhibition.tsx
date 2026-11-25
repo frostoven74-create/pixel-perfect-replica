@@ -46,6 +46,7 @@ export function Exhibition() {
             <h1 id="hero-title">TERRAVISION<span>OS</span></h1>
             <p className="tv-hero-subtitle">Two worlds. <em>One shared vision.</em></p>
           </div>
+          <div className="tv-scene-slot tv-hero-slot" data-visual="top" aria-hidden />
           <div className="tv-hero-projects">
             <ProjectPanel id="imagined" />
             <div className="tv-core-label" aria-hidden><span className="tv-crosshair">+</span> TV—OS / 001<span className="tv-core-status">A CONNECTED PERSPECTIVE</span></div>
@@ -72,6 +73,7 @@ export function Exhibition() {
 
         <section id="imagined" className="tv-story tv-story-imagined" data-scene-range="0.24,0.42">
           <span className="tv-world-word" aria-hidden>IMAGINED</span>
+          <div className="tv-scene-slot" data-visual="imagined" aria-hidden />
           <div className="tv-story-inner">
             <div className="tv-story-copy">
               <SectionLabel number="02">IMAGINED</SectionLabel>
@@ -89,6 +91,7 @@ export function Exhibition() {
 
         <section id="earth" className="tv-story tv-story-earth" data-scene-range="0.42,0.68">
           <span className="tv-world-word" aria-hidden>EARTH//OS</span>
+          <div className="tv-scene-slot" data-visual="earth" aria-hidden />
           <div className="tv-story-inner">
             <div className="tv-scene-caption"><span>FIG. 03</span><span>NOTHING EXISTS IN ISOLATION.</span><span className="tv-caption-line" /></div>
             <div className="tv-story-copy">
@@ -127,6 +130,7 @@ export function Exhibition() {
           <div className="tv-section-inner">
             <SectionLabel number="06">YOUR NEXT PERSPECTIVE</SectionLabel>
             <h2 className="tv-story-title">Two worlds.<br /><em>One vision.</em></h2>
+            <div className="tv-scene-slot" data-visual="explore" aria-hidden />
             <div className="tv-final-actions"><ProjectCta project={PROJECTS.imagined} /><ProjectCta project={PROJECTS.earth} /></div>
           </div>
         </section>

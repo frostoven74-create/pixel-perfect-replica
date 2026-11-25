@@ -7,4 +7,5 @@ export const sceneState = {
   pointerY: 0,
   focus: null as ProjectId | null,
   reducedMotion: false,
+  activeSection: "top",
 };
