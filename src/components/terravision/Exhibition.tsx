@@ -43,7 +43,7 @@ export function Exhibition() {
         <section id="top" className="tv-hero" data-scene-range="0,0.07" aria-labelledby="hero-title">
           <div className="tv-hero-heading">
             <p className="tv-eyebrow"><span /> IMAGINATION × PLANETARY UNDERSTANDING</p>
-            <h1 id="hero-title">TerraVision<span>OS</span><sup>®</sup></h1>
+            <h1 id="hero-title">TERRAVISION<span>OS</span></h1>
             <p className="tv-hero-subtitle">Two worlds. <em>One shared vision.</em></p>
           </div>
           <div className="tv-hero-projects">
@@ -64,13 +64,14 @@ export function Exhibition() {
         <section id="the-connection" className="tv-connection-intro tv-section" data-scene-range="0.07,0.24">
           <div className="tv-section-inner">
             <SectionLabel number="01">THE CONNECTION</SectionLabel>
-            <h2 className="tv-story-title">Two different directions.<br /><em>One shared vision.</em></h2>
+            <h2 className="tv-story-title">Creation meets<br /><em>consciousness.</em></h2>
             <div className="tv-direction-rail"><span>IMAGINED</span><span className="tv-connection-thread" /><Asterisk aria-hidden /><span className="tv-connection-thread" /><span>EARTH//OS</span></div>
-            <p className="tv-intro-copy">One looks at what we can create.<br />The other asks what the world needs.</p>
+            <p className="tv-intro-copy">Two different directions. One shared vision.<br />One looks at what we can create.<br />The other asks what the world needs.</p>
           </div>
         </section>
 
         <section id="imagined" className="tv-story tv-story-imagined" data-scene-range="0.24,0.42">
+          <span className="tv-world-word" aria-hidden>IMAGINED</span>
           <div className="tv-story-inner">
             <div className="tv-story-copy">
               <SectionLabel number="02">IMAGINED</SectionLabel>
@@ -87,6 +88,7 @@ export function Exhibition() {
         </section>
 
         <section id="earth" className="tv-story tv-story-earth" data-scene-range="0.42,0.68">
+          <span className="tv-world-word" aria-hidden>EARTH//OS</span>
           <div className="tv-story-inner">
             <div className="tv-scene-caption"><span>FIG. 03</span><span>NOTHING EXISTS IN ISOLATION.</span><span className="tv-caption-line" /></div>
             <div className="tv-story-copy">

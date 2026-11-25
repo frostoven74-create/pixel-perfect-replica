@@ -1,5 +1,8 @@
 # TERRAVISION-OS
 
+- [x] Re-art-direct the exhibition with a dimensional iridescent sculpture, expressive typography and richer project worlds.
+- [x] Verify the redesigned experience at phone, compact preview, tablet and desktop sizes.
+
 - [x] Establish cinematic design system and exhibition shell.
 - [x] Build interactive central 3D disc and responsive hero.
 - [x] Build project stories, connection, future vision and final invitation.

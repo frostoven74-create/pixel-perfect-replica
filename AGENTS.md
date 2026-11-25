@@ -35,3 +35,4 @@ use the editor.
 - Use one shared fixed 3D stage and section-derived scene progress for continuous transitions without remounting canvases.
 - Keep external project destinations in the central project configuration and show a truthful pending state for absent URLs, never a fabricated destination.
 - Use GSAP for interface choreography, native scrolling for navigation, and refs for frame animation to avoid conflicting motion systems and per-frame React renders.
+- Keep the optical coating in its own shader material and batch repeated disc markings into merged geometry for a distinctive surface without excessive draw calls.

@@ -87,12 +87,12 @@ export default function SceneCanvas({ lite }: { lite: boolean }) {
         onCreated={() => wrap.current?.setAttribute("data-scene-ready", "true")}
       >
         <fog attach="fog" args={["#050608", 9, 22]} />
-        <ambientLight intensity={0.35} />
-        <directionalLight position={[4, 5, 3]} intensity={1.6} color="#f5f6f2" />
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[4, 5, 3]} intensity={2.6} color="#f5f6f2" />
         <directionalLight position={[-5, -2, -3]} intensity={0.8} color="#d8c49a" />
         <AccentLight />
         <Environment resolution={lite ? 64 : 256}>
-          <Lightformer intensity={2.4} position={[0, 5, -2]} scale={[10, 2, 1]} color="#dde3e8" />
+          <Lightformer intensity={4} position={[0, 5, -2]} scale={[10, 2, 1]} color="#dde3e8" />
           <Lightformer intensity={1.4} position={[-5, 0, 1]} rotation-y={Math.PI / 2} scale={[12, 1, 1]} color="#8eebff" />
           <Lightformer intensity={1.1} position={[5, -1, 1]} rotation-y={-Math.PI / 2} scale={[12, 1, 1]} color="#d8c49a" />
           <Lightformer form="ring" intensity={1.5} position={[0, 0, 6]} scale={3} color="#ffffff" />

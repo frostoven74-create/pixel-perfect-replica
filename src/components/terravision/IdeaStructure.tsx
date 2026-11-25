@@ -57,15 +57,23 @@ export function IdeaStructure() {
       {LAYERS.map((layer, i) => (
         <group key={layer.label} ref={(g) => { layers.current[i] = g; }}>
           <mesh>
-            <boxGeometry args={[layer.s, 0.06, layer.s]} />
-            <meshPhysicalMaterial color={layer.color} metalness={0.25} roughness={0.12} transmission={0.55} thickness={0.4} transparent opacity={0.82} />
+            <cylinderGeometry args={[layer.s * 0.65, layer.s * 0.65, 0.12, 64]} />
+            <meshPhysicalMaterial color={layer.color} metalness={0.6} roughness={0.18} transmission={0.25} thickness={0.4} transparent opacity={0.9} iridescence={0.6} />
           </mesh>
-          <lineSegments>
-            <edgesGeometry args={[new THREE.BoxGeometry(layer.s * 1.04, 0.07, layer.s * 1.04)]} />
-            <lineBasicMaterial color={layer.color} transparent opacity={0.8} />
-          </lineSegments>
+          <mesh rotation={[Math.PI/2,0,0]}>
+            <torusGeometry args={[layer.s*0.7,0.012,10,100]} />
+            <meshStandardMaterial color={layer.color} metalness={0.8} roughness={0.12} />
+          </mesh>
+          {Array.from({length:8},(_,j)=><mesh key={j} position={[Math.cos(j*Math.PI/4)*layer.s*0.5,0.1,Math.sin(j*Math.PI/4)*layer.s*0.5]}>
+            <boxGeometry args={[0.08,0.06,0.13]} />
+            <meshStandardMaterial color="#dde3e8" metalness={0.9} roughness={0.2} />
+          </mesh>)}
         </group>
       ))}
+      {[0,1,2].map(i=><mesh key={i} position={[(i-1)*0.45,0,0]}>
+        <cylinderGeometry args={[0.025,0.025,2.3,12]} />
+        <meshPhysicalMaterial color="#dde3e8" metalness={0.9} roughness={0.12} transparent opacity={0.55} />
+      </mesh>)}
     </group>
   );
 }

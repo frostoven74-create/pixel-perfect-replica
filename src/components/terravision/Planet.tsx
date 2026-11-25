@@ -48,7 +48,7 @@ function makeTextures(size: number) {
         const m = fbm(nx * 2 + 9, ny * 2);
         li.data.set([60 + m * 70, 88 + m * 55, 62 + m * 25, 255], i);
       } else li.data.set([8 + e * 12, 20 + e * 25, 31 + e * 40, 255], i);
-      const c = fbm(nx * 1.6 + 30, ny * 2.4);
+      const c = fbm(nx * 3.2 + 30 + Math.sin(ny*3)*0.45, ny * 5.4);
       ci.data.set([245, 246, 242, Math.max(0, c - 0.53) * 520], i);
     }
   }
@@ -87,7 +87,7 @@ export function Planet({ lite }: { lite: boolean }) {
     const delta = Math.min(rawDelta, 0.05);
     const p = sceneState.scroll;
     const vis = ease((p - 0.4) / 0.08) * (1 - ease((p - 0.64) / 0.08));
-    const connect = ease((p - 0.5) / 0.09);
+    const connect = 0.45 + ease((p - 0.5) / 0.09)*0.55;
     if (!root.current) return;
     root.current.visible = vis > 0.01;
     root.current.scale.setScalar(Math.max(0.001, (0.75 + vis * 0.25) * (lite ? 0.55 : 0.85)));
@@ -106,7 +106,7 @@ export function Planet({ lite }: { lite: boolean }) {
     <group ref={root} rotation={[0.25, 0, -0.18]}>
       <mesh ref={globe}>
         <sphereGeometry args={[1.6, lite ? 48 : 96, lite ? 32 : 64]} />
-        <meshStandardMaterial map={textures.landTex} roughness={0.82} metalness={0.05} />
+        <meshStandardMaterial map={textures.landTex} bumpMap={textures.landTex} bumpScale={0.025} roughness={0.72} metalness={0.08} />
       </mesh>
       <mesh ref={clouds} scale={1.018}>
         <sphereGeometry args={[1.6, 64, 48]} />
