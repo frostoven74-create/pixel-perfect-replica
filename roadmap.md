@@ -12,3 +12,4 @@
 - [x] Build project stories, connection, future vision and final invitation.
 - [x] Configure verified real project destinations (IMAGINED .dev correction confirmed; EARTH//OS connected).
 - [x] Verify navigation, 3D, mobile, reduced motion and fallback.
+- [ ] Rebuild hero to follow the uploaded reference image (split, iridescent sphere, orbits, editorial type).

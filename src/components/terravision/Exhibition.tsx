@@ -1,10 +1,11 @@
 import { useEffect, useRef } from "react";
-import { ArrowDown, ArrowUpRight, Asterisk, Globe2, Layers3 } from "lucide-react";
+import { ArrowUpRight, Asterisk, Globe2, Layers3 } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button";
 import { PROJECTS } from "@/config/projects";
 import { HeroScene } from "./HeroScene";
+import { OrbitalGeometry } from "./OrbitalGeometry";
 import { ProjectCta } from "./ProjectCta";
 import { ProjectPanel } from "./ProjectPanel";
 import { scrollToSection, SiteNav } from "./SiteNav";
@@ -20,9 +21,16 @@ export function Exhibition() {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.from(".tv-hero-heading", { y: 22, opacity: 0, duration: 1.3, ease: "power3.out" });
-        gsap.from(".tv-project-imagined", { x: -8, duration: 0.7, ease: "power3.out" });
-        gsap.from(".tv-project-earth", { x: 8, duration: 0.7, ease: "power3.out" });
+        const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
+        intro.from(".tv-hero-backdrop > span", { scaleX: 0, duration: 1.4, ease: "expo.inOut" })
+          .from(".tv-hero-frame", { opacity: 0, scale: 0.985, duration: 1 }, "-=0.6")
+          .fromTo(".tv-orbit", { strokeDashoffset: 1200, opacity: 0 }, { strokeDashoffset: 0, opacity: 1, duration: 2.2, stagger: 0.12 }, "-=0.7")
+          .from(".tv-line", { yPercent: 110, duration: 1.2, stagger: 0.12 }, "<0.2")
+          .from(".tv-project-imagined", { x: -60, opacity: 0, duration: 1.1 }, "<0.4")
+          .from(".tv-project-earth", { x: 60, opacity: 0, duration: 1.1 }, "<")
+          .from(".tv-hero-subtitle, .tv-hero-index, .tv-hero-note, .tv-scroll-cue", { opacity: 0, y: 10, duration: 0.8, stagger: 0.06 }, "<0.3");
+        gsap.to(".tv-orbits", { rotate: 24, scale: 1.18, ease: "none", scrollTrigger: { trigger: "#top", start: "top top", end: "bottom top", scrub: 0.8 } });
+        gsap.to(".tv-hero-title", { yPercent: -18, ease: "none", scrollTrigger: { trigger: "#top", start: "top top", end: "bottom top", scrub: 0.8 } });
         gsap.utils.toArray<HTMLElement>(".tv-story-title").forEach((el) => {
           gsap.from(el, { y: 38, duration: 1.25, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reverse" } });
         });
@@ -38,28 +46,27 @@ export function Exhibition() {
     <div ref={root} className="tv-exhibition">
       <a className="tv-skip-link" href="#main">Skip to exhibition</a>
       <SiteNav />
+      <div className="tv-hero-backdrop" aria-hidden><span /><span /><i><b /><b /></i></div>
       <HeroScene />
       <main id="main">
         <section id="top" className="tv-hero" data-scene-range="0,0.07" aria-labelledby="hero-title">
-          <div className="tv-hero-heading">
-            <p className="tv-eyebrow"><span /> IMAGINATION × PLANETARY UNDERSTANDING</p>
-            <h1 id="hero-title">TERRAVISION<span>OS</span></h1>
-            <p className="tv-hero-subtitle">Two worlds. <em>One shared vision.</em></p>
+                    <div className="tv-hero-frame">
+            <OrbitalGeometry />
+            <div className="tv-scene-slot tv-hero-slot" data-visual="top" aria-hidden />
+            <p className="tv-hero-index"><span>TV—OS / 001</span><span>A digital exhibition</span></p>
+            <h1 id="hero-title" className="tv-hero-title">
+              <span className="tv-mask"><span className="tv-line tv-line-a">TerraVision</span></span>
+              <span className="tv-mask"><span className="tv-line tv-line-b">Two worlds</span></span>
+              <span className="tv-mask"><span className="tv-line tv-line-c">One vision<sup>OS</sup></span></span>
+            </h1>
+            <p className="tv-hero-subtitle">Imagination ×<br /><em>planetary understanding.</em></p>
+            <div className="tv-territories">
+              <ProjectPanel id="imagined" />
+              <ProjectPanel id="earth" />
+            </div>
+            <button className="tv-scroll-cue" onClick={() => scrollToSection("the-connection")}><span className="tv-scroll-tick" aria-hidden />Scroll</button>
+            <p className="tv-hero-note">A connected perspective</p>
           </div>
-          <div className="tv-scene-slot tv-hero-slot" data-visual="top" aria-hidden />
-          <div className="tv-hero-projects">
-            <ProjectPanel id="imagined" />
-            <div className="tv-core-label" aria-hidden><span className="tv-crosshair">+</span> TV—OS / 001<span className="tv-core-status">A CONNECTED PERSPECTIVE</span></div>
-            <ProjectPanel id="earth" />
-          </div>
-          <div className="tv-hero-footer">
-            <span className="tv-coordinate">A DIGITAL EXHIBITION<br /><span>CREATIVITY · CONSCIOUSNESS · CONNECTION</span></span>
-            <Button variant="exhibition" className="tv-scroll-button" onClick={() => scrollToSection("the-connection")}>
-              <span>Enter the experience</span><ArrowDown aria-hidden />
-            </Button>
-            <span className="tv-edition">INDEPENDENT PROJECTS<br /><span>ONE FUTURE VISION</span></span>
-          </div>
-          <span className="tv-hero-edge" aria-hidden />
         </section>
 
         <section id="the-connection" className="tv-connection-intro tv-section" data-scene-range="0.07,0.24">
