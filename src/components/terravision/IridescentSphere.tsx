@@ -47,7 +47,8 @@ function createIridescentTexture() {
 
 function createSphereGeometry(detail: number) {
   const geometry = new THREE.IcosahedronGeometry(1.35, detail);
-  const position = geometry.attributes.position;
+  const position = geometry.attributes["position"];
+  if (!position) return geometry;
   const point = new THREE.Vector3();
   for (let index = 0; index < position.count; index += 1) {
     point.fromBufferAttribute(position, index);
@@ -107,7 +108,7 @@ export function IridescentSphere({ lite }: { lite: boolean }) {
       <primitive object={geometry} attach="geometry" />
       <meshPhysicalMaterial
         ref={material}
-        map={texture ?? undefined}
+        map={texture}
         color="#fff8f1"
         roughness={0.24}
         metalness={0.08}
