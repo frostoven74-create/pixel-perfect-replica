@@ -22,13 +22,11 @@ export function Exhibition() {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
-        intro.from(".tv-hero-backdrop > span", { scaleX: 0, duration: 1.4, ease: "expo.inOut" })
-          .from(".tv-hero-frame", { opacity: 0, scale: 0.985, duration: 1 }, "-=0.6")
-          .fromTo(".tv-orbit", { strokeDashoffset: 1200, opacity: 0 }, { strokeDashoffset: 0, opacity: 1, duration: 2.2, stagger: 0.12 }, "-=0.7")
-          .from(".tv-line", { yPercent: 110, duration: 1.2, stagger: 0.12 }, "<0.2")
-          .from(".tv-project-imagined", { x: -60, opacity: 0, duration: 1.1 }, "<0.4")
-          .from(".tv-project-earth", { x: 60, opacity: 0, duration: 1.1 }, "<")
-          .from(".tv-hero-subtitle, .tv-hero-index, .tv-hero-note, .tv-scroll-cue", { opacity: 0, y: 10, duration: 0.8, stagger: 0.06 }, "<0.3");
+        intro.from(".tv-hero-backdrop > span", { scaleX: 0, duration: 0.9, stagger: 0.08, ease: "expo.inOut" })
+          .from(".tv-hero-frame", { opacity: 0, scale: 0.99, duration: 0.75 }, "-=0.35")
+          .fromTo(".tv-orbit", { strokeDashoffset: 1200, opacity: 0 }, { strokeDashoffset: 0, opacity: 0.5, duration: 1.35, stagger: 0.08 }, "-=0.3")
+          .from(".tv-line", { yPercent: 110, duration: 0.85, stagger: 0.08 }, "-=0.65")
+          .from(".tv-hero-subtitle, .tv-hero-index, .tv-hero-note, .tv-scroll-cue", { opacity: 0, y: 8, duration: 0.55, stagger: 0.05 }, "-=0.3");
         gsap.to(".tv-orbits", { rotate: 24, scale: 1.18, ease: "none", scrollTrigger: { trigger: "#top", start: "top top", end: "bottom top", scrub: 0.8 } });
         gsap.to(".tv-hero-title", { yPercent: -18, ease: "none", scrollTrigger: { trigger: "#top", start: "top top", end: "bottom top", scrub: 0.8 } });
         gsap.utils.toArray<HTMLElement>(".tv-story-title").forEach((el) => {

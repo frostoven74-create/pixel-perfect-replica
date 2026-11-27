@@ -460,3 +460,89 @@
   .tv-territories { position: absolute; inset: auto 16px 18px 16px; margin: 0; }
   .tv-scroll-cue { bottom: -50px; left: 16px; right: auto; }
 }
+
+/* Refined split-frame typography: the labels and title remain legible at every load state. */
+.tv-hero h1.tv-hero-title {
+  left: 0;
+  right: 0;
+  top: 17%;
+  height: 54%;
+  margin: 0;
+  font-family: var(--font-editorial);
+  font-size: clamp(62px, 8.6vw, 118px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  mix-blend-mode: normal;
+}
+.tv-hero h1.tv-hero-title .tv-mask {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1em;
+  overflow: hidden;
+  padding: 0;
+  font: inherit;
+  line-height: 1;
+}
+.tv-hero h1.tv-hero-title .tv-mask-a { top: 0; }
+.tv-hero h1.tv-hero-title .tv-mask-b { top: 40%; }
+.tv-hero h1.tv-hero-title .tv-mask-c { top: 80%; }
+.tv-hero h1.tv-hero-title .tv-line {
+  display: block;
+  width: 100%;
+  margin: 0;
+  font-family: var(--font-editorial);
+  font-size: inherit;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  background: linear-gradient(90deg, var(--ivory) 50%, var(--ivory-ink) 50%);
+  background-size: calc(100vw - 9%) 100%;
+  background-position: center;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.tv-hero h1.tv-hero-title .tv-line-a { padding-left: 10%; }
+.tv-hero h1.tv-hero-title .tv-line-b { padding-left: 48%; }
+.tv-hero h1.tv-hero-title .tv-line-c { padding-left: 17%; }
+.tv-hero h1.tv-hero-title .tv-line-c sup {
+  position: relative;
+  top: 0.18em;
+  margin-left: 0.2em;
+  color: var(--ivory-ink);
+  -webkit-text-fill-color: var(--ivory-ink);
+  font-family: var(--font-editorial);
+  font-size: 0.2em;
+  font-style: normal;
+  line-height: 1;
+}
+.tv-hero-subtitle { top: 12%; right: 6%; bottom: auto; }
+.tv-scroll-cue { bottom: 7%; }
+.tv-territories .tv-project-panel { opacity: 1; transform: none; }
+
+@media (max-width: 768px) {
+  .tv-hero h1.tv-hero-title {
+    top: 16%;
+    height: 48%;
+    font-size: clamp(30px, 9vw, 42px);
+  }
+  .tv-hero h1.tv-hero-title .tv-mask-b { top: 42%; }
+  .tv-hero h1.tv-hero-title .tv-mask-c { top: 84%; }
+  .tv-hero h1.tv-hero-title .tv-line {
+    background-size: calc(100vw - 24px) 100%;
+  }
+  .tv-hero h1.tv-hero-title .tv-line-a { padding-left: 6%; }
+  .tv-hero h1.tv-hero-title .tv-line-b { padding-left: 40%; }
+  .tv-hero h1.tv-hero-title .tv-line-c { padding-left: 10%; }
+  .tv-hero-subtitle { display: none; }
+  .tv-scroll-cue { bottom: -50px; left: 16px; right: auto; }
+}
+
+@media (max-width: 359px) {
+  .tv-hero h1.tv-hero-title { font-size: clamp(28px, 9vw, 32px); }
+}
